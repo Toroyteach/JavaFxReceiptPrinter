@@ -1,0 +1,157 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.chart.BarChart?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.chart.LineChart?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.chart.PieChart?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="648.0" prefWidth="885.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.Home">
+   <top>
+      <HBox alignment="CENTER" prefHeight="149.0" prefWidth="858.0" spacing="40.0" style="-fx-background-color: #a6a4a4;" BorderPane.alignment="CENTER">
+         <children>
+            <FlowPane prefHeight="74.0" prefWidth="218.0" style="-fx-background-color: #2b0d0d;">
+               <children>
+                  <ImageView fx:id="cartImageView" fitHeight="105.0" fitWidth="89.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../java/com/example/demo/cart.png" />
+                     </image>
+                  </ImageView>
+                  <VBox prefHeight="128.0" prefWidth="126.0">
+                     <children>
+                        <Label text="Total Sales" textFill="WHITE">
+                           <font>
+                              <Font size="22.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="totalSales" prefHeight="26.0" prefWidth="118.0" text=" ksh 100000 " textFill="WHITE">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets left="4.0" top="5.0" />
+                           </VBox.margin>
+                        </Label>
+                     </children>
+                  </VBox>
+               </children></FlowPane>
+            <FlowPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #8a7070;">
+               <children>
+                  <ImageView fx:id="calendarImageView" fitHeight="113.0" fitWidth="103.0" pickOnBounds="true" preserveRatio="true">
+                     <image>
+                        <Image url="@../../java/com/example/demo/date.png" />
+                     </image>
+                  </ImageView>
+                  <VBox prefHeight="132.0" prefWidth="94.0">
+                     <children>
+                        <Label prefHeight="26.0" prefWidth="93.0" text="Todays Sales" textFill="WHITE">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="todaysSales" text="ksh 120000 " textFill="WHITE">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                           <VBox.margin>
+                              <Insets left="2.0" top="10.0" />
+                           </VBox.margin>
+                        </Label>
+                     </children>
+                  </VBox>
+               </children></FlowPane>
+            <FlowPane prefHeight="200.0" prefWidth="200.0" style="-fx-background-color: #225c24;">
+               <children>
+                  <HBox prefHeight="128.0" prefWidth="218.0">
+                     <children>
+                        <ImageView fx:id="peopleImageView" fitHeight="126.0" fitWidth="122.0" pickOnBounds="true" preserveRatio="true">
+                           <image>
+                              <Image url="@../../java/com/example/demo/customers.png" />
+                           </image>
+                        </ImageView>
+                        <VBox prefHeight="200.0" prefWidth="100.0">
+                           <children>
+                              <Label text="Top Item" textFill="WHITE">
+                                 <font>
+                                    <Font size="22.0" />
+                                 </font>
+                              </Label>
+                              <Label fx:id="topItem" text=" Blazer " textFill="#c1a0a0">
+                                 <font>
+                                    <Font size="18.0" />
+                                 </font>
+                                 <VBox.margin>
+                                    <Insets left="18.0" top="10.0" />
+                                 </VBox.margin>
+                              </Label>
+                           </children>
+                        </VBox>
+                     </children>
+                  </HBox>
+               </children></FlowPane>
+         </children>
+         <padding>
+            <Insets bottom="10.0" top="10.0" />
+         </padding>
+      </HBox>
+   </top>
+   <center>
+      <FlowPane prefHeight="242.0" prefWidth="886.0" BorderPane.alignment="CENTER">
+         <children>
+            <VBox prefHeight="223.0" prefWidth="863.0">
+               <children>
+                  <Label text="Weekly Sales" textAlignment="CENTER">
+                     <font>
+                        <Font size="15.0" />
+                     </font>
+                     <VBox.margin>
+                        <Insets left="380.0" />
+                     </VBox.margin>
+                  </Label>
+                  <LineChart fx:id="weeklySalesLineGraph">
+                    <xAxis>
+                      <CategoryAxis fx:id="weeklySalesLineGraph_y" side="BOTTOM" />
+                    </xAxis>
+                    <yAxis>
+                      <NumberAxis fx:id="weeklySalesLineGraph_x" side="LEFT" />
+                    </yAxis>
+                  </LineChart>
+               </children>
+            </VBox>
+         </children>
+         <BorderPane.margin>
+            <Insets />
+         </BorderPane.margin>
+         <padding>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </padding>
+      </FlowPane>
+   </center>
+   <bottom>
+      <HBox prefHeight="266.0" prefWidth="886.0" spacing="10.0" style="-fx-background-color: #a6a4a4;" BorderPane.alignment="CENTER">
+         <children>
+            <PieChart fx:id="individualItemsPieChart" prefHeight="234.0" prefWidth="374.0" style="-fx-background-color: #706242;" />
+            <BarChart fx:id="monthlyBarGraphSales">
+              <xAxis>
+                <CategoryAxis fx:id="monthlySalesBarChart_x" side="BOTTOM" />
+              </xAxis>
+              <yAxis>
+                <NumberAxis fx:id="monthlySalesBarChart_y" side="LEFT" />
+              </yAxis>
+            </BarChart>
+         </children>
+         <padding>
+            <Insets bottom="10.0" left="60.0" right="10.0" top="10.0" />
+         </padding>
+      </HBox>
+   </bottom>
+</BorderPane>
