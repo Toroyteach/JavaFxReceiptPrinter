@@ -12,6 +12,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.*;
 
@@ -35,6 +37,9 @@ public class Account implements Initializable {
     @FXML
     private TextArea viewPrinters;
 
+    @FXML
+    private ImageView accountLogoImage;
+
     public Account(){
 
     }
@@ -42,6 +47,9 @@ public class Account implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         //getUsersDetails();
+        checkMysqlConnecion();
+        Image image = new Image("/expresslogo.jpg");
+        accountLogoImage.setImage(image);
     }
 
     private void getUsersDetails() {
@@ -149,6 +157,17 @@ public class Account implements Initializable {
         alert.setContentText(message);
         alert.initOwner(owner);
         alert.show();
+    }
+
+    public void checkMysqlConnecion(){
+        boolean flag = new MysqlCon().getMysqlCon();
+
+        if (!flag) {
+
+            infoBox("Please ensure connection to database is established and Restart Application", null, "Failed");
+            System.exit(0);
+
+        }
     }
 
 }

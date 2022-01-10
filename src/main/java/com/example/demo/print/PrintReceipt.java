@@ -104,7 +104,7 @@ public class PrintReceipt implements Printable {
                 int headerRectHeight=15;
 
                 g2d.setFont(new Font("Monospaced",Font.PLAIN,9));
-//                g2d.drawImage(icon.getImage(), 50, 20, 90, 30, rootPane);y+=yShift+30;
+                //g2d.drawImage(icon.getImage(), 50, 20, 90, 30, 0);y+=yShift+30;
                 g2d.drawString("-------------------------------------",12,y);y+=yShift;
                 g2d.drawString("           Express Laundry           ",12,y);y+=yShift;
                 g2d.drawString("       Address:  Ongata Rongai       ",12,y);y+=yShift;

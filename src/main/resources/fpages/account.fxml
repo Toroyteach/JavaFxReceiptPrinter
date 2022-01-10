@@ -40,9 +40,9 @@
          <children>
             <VBox alignment="TOP_CENTER" prefHeight="318.0" prefWidth="387.0" spacing="20.0" style="-fx-background-color: #4a4343;">
                <children>
-                  <ImageView fitHeight="136.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
+                  <ImageView fx:id="accountLogoImage" fitHeight="136.0" fitWidth="200.0" pickOnBounds="true" preserveRatio="true">
                      <image>
-                        <Image url="@../../java/com/example/demo/pngavatar.png" />
+                        <Image url="@../expresslogo.jpg" />
                      </image>
                   </ImageView>
                   <Label text="Lesley Irungu" textFill="WHITE" />

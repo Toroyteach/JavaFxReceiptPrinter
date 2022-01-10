@@ -35,6 +35,7 @@ public class Search implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        checkMysqlConnecion();
         clearFields();
         //validateText();
     }
@@ -104,5 +105,24 @@ public class Search implements Initializable {
                 searchItemEdt.setText(newValue.replaceAll("[^\\d]", ""));
             }
         });
+    }
+
+    public void checkMysqlConnecion(){
+        boolean flag = new MysqlCon().getMysqlCon();
+
+        if (!flag) {
+
+            infoBox("Please ensure connection to database is established and Restart Application", null, "Failed");
+            System.exit(0);
+
+        }
+    }
+
+    public static void infoBox(String infoMessage, String headerText, String title) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setContentText(infoMessage);
+        alert.setTitle(title);
+        alert.setHeaderText(headerText);
+        alert.showAndWait();
     }
 }

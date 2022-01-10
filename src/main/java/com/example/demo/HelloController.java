@@ -1,5 +1,6 @@
 package com.example.demo;
 
+import com.example.demo.database.MysqlCon;
 import javafx.animation.Animation;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -7,6 +8,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
 import javafx.scene.Parent;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -50,6 +52,8 @@ public class HelloController implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        checkMysqlConnecion();
 
         try{
 
@@ -138,6 +142,25 @@ public class HelloController implements Initializable {
         );
         clock.setCycleCount(Animation.INDEFINITE);
         clock.play();
+    }
+
+    public void checkMysqlConnecion(){
+        boolean flag = new MysqlCon().getMysqlCon();
+
+        if (!flag) {
+
+            infoBox("Please ensure connection to database is established and Restart Application", null, "Failed");
+            System.exit(0);
+
+        }
+    }
+
+    public static void infoBox(String infoMessage, String headerText, String title) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setContentText(infoMessage);
+        alert.setTitle(title);
+        alert.setHeaderText(headerText);
+        alert.showAndWait();
     }
 
 }

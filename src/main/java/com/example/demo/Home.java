@@ -12,6 +12,7 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.chart.*;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -58,6 +59,7 @@ public class Home implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        checkMysqlConnecion();
         loadDashboardValues();
         loadImages();
     }
@@ -131,5 +133,24 @@ public class Home implements Initializable {
             series.getData().add(new XYChart.Data(lineData.get(i).getName(), lineData.get(i).getAmount()));
         }
         weeklySalesLineGraph.getData().addAll(series);
+    }
+
+    public void checkMysqlConnecion(){
+        boolean flag = new MysqlCon().getMysqlCon();
+
+        if (!flag) {
+
+            infoBox("Please ensure connection to database is established and Restart Application", null, "Failed");
+            System.exit(0);
+
+        }
+    }
+
+    public static void infoBox(String infoMessage, String headerText, String title) {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setContentText(infoMessage);
+        alert.setTitle(title);
+        alert.setHeaderText(headerText);
+        alert.showAndWait();
     }
 }

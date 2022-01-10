@@ -26,7 +26,7 @@ public class UpdateUser implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
+        checkMysqlConnecion();
         getSelectedUser();
     }
 
@@ -117,5 +117,16 @@ public class UpdateUser implements Initializable {
         alert.setContentText(message);
         alert.initOwner(owner);
         alert.show();
+    }
+
+    public void checkMysqlConnecion(){
+        boolean flag = new MysqlCon().getMysqlCon();
+
+        if (!flag) {
+
+            infoBox("Please ensure connection to database is established then Restart Application", null, "Failed");
+            System.exit(0);
+
+        }
     }
 }

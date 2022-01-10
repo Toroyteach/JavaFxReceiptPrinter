@@ -53,6 +53,7 @@ public class Transact implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+        checkMysqlConnecion();
         clearFields();
         validateNumbers();
         getRandomString();
@@ -109,7 +110,8 @@ public class Transact implements Initializable {
     private void printReceipt(List<Order> list) {
         final TextArea textArea = new TextArea("Use this as the text area to the new system");
         Stage stage =(Stage) btnPrint.getScene().getWindow();
-        pageSetup(list, stage);
+        //pageSetup(list, stage);
+        new PrintReceipt(list);
         System.out.println("Printed receipt");
     }
 
@@ -389,6 +391,17 @@ public class Transact implements Initializable {
         if (printed)
         {
             job.endJob();
+        }
+    }
+
+    public void checkMysqlConnecion(){
+        boolean flag = new MysqlCon().getMysqlCon();
+
+        if (!flag) {
+
+            infoBox("Please ensure connection to database is established then Restart Application", null, "Failed");
+            System.exit(0);
+
         }
     }
 
