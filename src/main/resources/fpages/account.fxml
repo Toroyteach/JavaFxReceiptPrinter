@@ -45,8 +45,8 @@
                         <Image url="@../expresslogo.jpg" />
                      </image>
                   </ImageView>
-                  <Label text="Lesley Irungu" textFill="WHITE" />
-                  <Label text="lesely@gmail.com" textFill="WHITE" />
+                  <Label text="Lezz Mirungu" textFill="WHITE" />
+                  <Label text="lezlimrth@gmail.com" textFill="WHITE" />
                   <Label text="Active" textFill="WHITE" />
                </children>
                <padding>

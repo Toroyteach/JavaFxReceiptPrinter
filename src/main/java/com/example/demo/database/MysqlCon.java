@@ -1,8 +1,6 @@
 package com.example.demo.database;
 
 import com.example.demo.data.*;
-import com.example.demo.print.PrintReceipt;
-
 import java.sql.*;
 import java.text.DateFormatSymbols;
 import java.text.SimpleDateFormat;
@@ -105,15 +103,13 @@ public class MysqlCon{
             preparedStatement.setString(2, password);
             preparedStatement.setInt(3, 1);
 
-            //System.out.println(preparedStatement);
-
             ResultSet resultSet = preparedStatement.executeQuery();
             if (resultSet.next()) {
                 return true;
             }
 
         } catch (SQLException e) {
-            // print SQL exception information
+
             printSQLException(e);
         }
 

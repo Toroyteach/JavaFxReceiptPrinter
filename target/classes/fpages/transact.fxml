@@ -29,7 +29,13 @@
    <bottom>
       <HBox alignment="CENTER_RIGHT" prefHeight="168.0" prefWidth="886.0" spacing="20.0" BorderPane.alignment="CENTER_RIGHT">
          <children>
-            <Button fx:id="btnViewReport" mnemonicParsing="false" onAction="#viewReceipt" text="View Receipt">
+            <Label text="Total Amount" />
+            <TextField fx:id="accumulatedTotalAmountEdt" editable="false">
+               <HBox.margin>
+                  <Insets right="100.0" />
+               </HBox.margin>
+            </TextField>
+            <Button fx:id="btnViewReport" mnemonicParsing="false" onAction="#viewReceipt" text="Calculate Total">
                <cursor>
                   <Cursor fx:constant="HAND" />
                </cursor>

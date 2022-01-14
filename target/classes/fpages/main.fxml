@@ -12,6 +12,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
 
 <BorderPane prefHeight="669.0" prefWidth="940.0" xmlns="http://javafx.com/javafx/17" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.HelloController">
    <left>
@@ -75,13 +76,16 @@
                         <Image url="@../../java/com/example/demo/minimize-window-50.png" />
                      </image>
                   </ImageView>
-                  <Label prefHeight="18.0" prefWidth="118.0" text="Lesley Irungu" textFill="#efe8e8">
+                  <Label prefHeight="18.0" prefWidth="118.0" text="Lezz" textFill="#efe8e8">
                      <HBox.margin>
                         <Insets />
                      </HBox.margin>
                      <padding>
                         <Insets left="30.0" />
                      </padding>
+                     <font>
+                        <Font size="18.0" />
+                     </font>
                   </Label>
                </children>
             </HBox>

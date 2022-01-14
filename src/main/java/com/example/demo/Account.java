@@ -16,7 +16,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.*;
-
 import java.io.IOException;
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -70,11 +69,11 @@ public class Account implements Initializable {
     }
 
     @FXML
-    private void createUserAction(ActionEvent event) throws IOException {
+    private void createUserAction(ActionEvent event) {
 
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fpages/create.fxml"));
-            Parent root1 = (Parent) fxmlLoader.load();
+            Parent root1 = fxmlLoader.load();
             createUserStage = new Stage();
             createUserStage.initModality(Modality.APPLICATION_MODAL);
             createUserStage.setTitle("Create User");
@@ -89,11 +88,11 @@ public class Account implements Initializable {
     }
 
     @FXML
-    private void changePassword(ActionEvent event) throws IOException {
+    private void changePassword(ActionEvent event) {
 
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/fpages/updateuser.fxml"));
-            Parent root1 = (Parent) fxmlLoader.load();
+            Parent root1 = fxmlLoader.load();
             changePasswordStage = new Stage();
             changePasswordStage.initModality(Modality.APPLICATION_MODAL);
             changePasswordStage.setTitle("Update User");
@@ -143,7 +142,7 @@ public class Account implements Initializable {
     }
 
     public static void infoBox(String infoMessage, String headerText, String title) {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setContentText(infoMessage);
         alert.setTitle(title);
         alert.setHeaderText(headerText);

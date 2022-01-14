@@ -29,14 +29,14 @@ public class About implements Initializable {
 
         if (!flag) {
 
-            infoBox("Please ensure connection to database is established and Restart Application", null, "Failed");
+            infoBox("Please ensure connection to database is established and Restart Application", "Database Connection", "Error");
             System.exit(0);
 
         }
     }
 
     public static void infoBox(String infoMessage, String headerText, String title) {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setContentText(infoMessage);
         alert.setTitle(title);
         alert.setHeaderText(headerText);

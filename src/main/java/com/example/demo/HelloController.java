@@ -14,9 +14,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.StackPane;
-import javafx.scene.text.Font;
 import javafx.util.Duration;
-
 import java.io.IOException;
 import java.net.URL;
 import java.time.LocalDate;
@@ -83,9 +81,7 @@ public class HelloController implements Initializable {
 
     private void setWindowFunction() {
 
-        closeImageView.setOnMouseClicked(mouseEvent -> {
-            System.exit(0);
-        });
+        closeImageView.setOnMouseClicked(mouseEvent -> System.exit(0));
     }
 
     private void loadImages() {

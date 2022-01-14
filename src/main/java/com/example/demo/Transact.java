@@ -1,11 +1,8 @@
 package com.example.demo;
 
 import com.example.demo.data.Order;
-import com.example.demo.data.ReceiptData;
 import com.example.demo.database.MysqlCon;
 import com.example.demo.print.PrintReceipt;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -16,8 +13,6 @@ import javafx.stage.Stage;
 import javafx.stage.Window;
 
 import java.net.URL;
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +25,8 @@ public class Transact implements Initializable {
     private Label orderitdlable;
 
     @FXML
-    private TextField homelaundryEdt, jacketBlazerEdt, curtainEdt, duvetEdt, carpetEdt;
+    private TextField homelaundryEdt, jacketBlazerEdt, curtainEdt, duvetEdt, carpetEdt, accumulatedTotalAmountEdt;
+    private double totalAmount;
 
     @FXML
     private CheckBox checkboxhome, checkboxJB, checkboxCurtain, checkboxDuvet, checkboxCarpet;
@@ -41,9 +37,7 @@ public class Transact implements Initializable {
     @FXML
     private Button btnViewReport, btnPrint;
 
-    private String[] choices = {"select", "medium", "large"};
-
-    private double hl = 50.00, jb = 150.00, curtain = 150.00, duvet = 400.00, carpet = 500.00;
+    private final String[] choices = {"select", "medium", "large"};
 
     private List<Order> orderItemsList;
 
@@ -96,32 +90,35 @@ public class Transact implements Initializable {
 
         if (!flag) {
 
-            infoBox("Please enter correct Details to Create An order", null, "Failed");
+            infoBox("Please enter correct Details to Create An order", "Form Error", "Failed");
 
         } else {
 
-            printReceipt(receiptList);
+            printReceipt(receiptList, orderid);
             clearFields();
             getRandomString();
-            infoBox("Order was created Successful!", null, "Success");
+            infoBox("Payment was created Successful!", "Payment Creation", "Success");
         }
     }
 
-    private void printReceipt(List<Order> list) {
-        final TextArea textArea = new TextArea("Use this as the text area to the new system");
-        Stage stage =(Stage) btnPrint.getScene().getWindow();
-        //pageSetup(list, stage);
-        new PrintReceipt(list);
-        System.out.println("Printed receipt");
+    private void printReceipt(List<Order> list, String orderid) {
+        double amount = getAmount();
+        new PrintReceipt(list, amount, orderid);
     }
 
     @FXML
     private void viewReceipt(ActionEvent event){
+        
+        // use this method to calculate the total amount
+        Window owner = btnPrint.getScene().getWindow();
+        boolean checkValue = checkEmptyValues(owner);
+        if(checkValue){
+            return;
+        }
 
-//        final TextArea textArea = new TextArea("Use this as the text area to the new system");
-//        Stage stage =(Stage) btnPrint.getScene().getWindow();
-//        pageSetup(textArea, stage);
-//        System.out.println("Printed receipt");
+        accumulatedTotalAmountEdt.setText("");
+        double totalAmount = calculateTotal();
+        accumulatedTotalAmountEdt.setText("ksh "+ totalAmount);
     }
 
     public boolean checkEmptyValues(Window owner){
@@ -169,7 +166,7 @@ public class Transact implements Initializable {
     private static void showAlert(Window owner, String message) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Form Error!");
-        alert.setHeaderText(null);
+        alert.setHeaderText("Input Error");
         alert.setContentText(message);
         alert.initOwner(owner);
         alert.show();
@@ -182,6 +179,7 @@ public class Transact implements Initializable {
         curtainEdt.setText("");
         duvetEdt.setText("");
         carpetEdt.setText("");
+        accumulatedTotalAmountEdt.setText("");
 
         boolean state = false;
 
@@ -208,8 +206,6 @@ public class Transact implements Initializable {
         String saltStr = salt.toString();
 
         orderitdlable.setText(saltStr);
-
-        //return generatedString;
     }
 
     private void validateNumbers(){
@@ -251,15 +247,16 @@ public class Transact implements Initializable {
         return getAmount();
     }
 
-    private double getAmount(){
+    public double getAmount(){
 
         double total = 0.0;
 
-        orderItemsList = new ArrayList<Order>();
+        orderItemsList = new ArrayList<>();
 
         if (checkboxhome.isSelected()) {
 
-            double itemPrice = hl * Integer.parseInt(homelaundryEdt.getText());
+            double hl = 50.00;
+            double itemPrice = hl * (Integer.parseInt(homelaundryEdt.getText().trim().isEmpty() ? String.valueOf(1) : homelaundryEdt.getText().trim()));
 
             total += hl * Integer.parseInt(homelaundryEdt.getText());
 
@@ -270,7 +267,8 @@ public class Transact implements Initializable {
 
         if (checkboxJB.isSelected()) {
 
-            double itemPrice = jb * Integer.parseInt(jacketBlazerEdt.getText());
+            double jb = 150.00;
+            double itemPrice = jb * (Integer.parseInt(jacketBlazerEdt.getText().trim().isEmpty() ? String.valueOf(1) : jacketBlazerEdt.getText().trim()));
 
             total += jb * Integer.parseInt(jacketBlazerEdt.getText());
 
@@ -283,23 +281,24 @@ public class Transact implements Initializable {
 
             double itemPrice = 0.0;
 
-            String value = (String) choiceboxcurtain.getValue();
+            String value = choiceboxcurtain.getValue();
 
             Order item3;
 
             if(value.equalsIgnoreCase("medium")){
 
-                itemPrice = curtain * Integer.parseInt(curtainEdt.getText());
+                double curtain = 150.00;
+                itemPrice = curtain * (Integer.parseInt(curtainEdt.getText().trim().isEmpty() ? String.valueOf(1) : curtainEdt.getText().trim()));
 
-                total += curtain * Integer.parseInt(curtainEdt.getText());
+                total += curtain * (Integer.parseInt(curtainEdt.getText().trim().isEmpty() ? String.valueOf(1) : curtainEdt.getText().trim()));
 
                 item3 = new Order("curtain", Integer.parseInt(curtainEdt.getText()), curtain, itemPrice);
 
             } else {
 
-                itemPrice = 250 * Integer.parseInt(curtainEdt.getText());
+                itemPrice = 250 * (Integer.parseInt(curtainEdt.getText().trim().isEmpty() ? String.valueOf(1) : curtainEdt.getText().trim()));
 
-                total += 250 * Integer.parseInt(curtainEdt.getText());
+                total += 250 * (Integer.parseInt(curtainEdt.getText().trim().isEmpty() ? String.valueOf(1) : curtainEdt.getText().trim()));
 
                 item3 = new Order("curtain", Integer.parseInt(curtainEdt.getText()), 250, itemPrice);
 
@@ -313,25 +312,26 @@ public class Transact implements Initializable {
 
             double itemPrice = 0.0;
 
-            String value = (String) choiceboxduvet.getValue();
+            String value = choiceboxduvet.getValue();
 
             Order item4;
 
             if(value.equalsIgnoreCase("medium")){
 
-                itemPrice = duvet * Integer.parseInt(duvetEdt.getText());
+                double duvet = 400.00;
+                itemPrice = duvet * (Integer.parseInt(duvetEdt.getText().trim().isEmpty() ? String.valueOf(1) : duvetEdt.getText().trim()));
 
-                total += duvet * Integer.parseInt(duvetEdt.getText());
+                total += duvet * (Integer.parseInt(duvetEdt.getText().trim().isEmpty() ? String.valueOf(1) : duvetEdt.getText().trim()));
 
-                item4 = new Order("duvet", Integer.parseInt(duvetEdt.getText()), duvet, itemPrice);
+                item4 = new Order("duvet", ((Integer.parseInt(duvetEdt.getText().trim().isEmpty() ? String.valueOf(1) : duvetEdt.getText().trim()))), duvet, itemPrice);
 
             } else {
 
-                itemPrice = 250 * Integer.parseInt(duvetEdt.getText());
+                itemPrice = 250 * (Integer.parseInt(duvetEdt.getText().trim().isEmpty() ? String.valueOf(1) : duvetEdt.getText().trim()));
 
-                total += 450 * Integer.parseInt(duvetEdt.getText());
+                total += 450 * (Integer.parseInt(duvetEdt.getText().trim().isEmpty() ? String.valueOf(1) : duvetEdt.getText().trim()));
 
-                item4 = new Order("duvet", Integer.parseInt(duvetEdt.getText()), 450, itemPrice);
+                item4 = new Order("duvet", (Integer.parseInt(duvetEdt.getText().trim().isEmpty() ? String.valueOf(1) : duvetEdt.getText().trim())), 450, itemPrice);
 
             }
 
@@ -341,11 +341,12 @@ public class Transact implements Initializable {
 
         if (checkboxCarpet.isSelected()) {
 
-            double itemPrice = carpet * Integer.parseInt(carpetEdt.getText());
+            double carpet = 500.00;
+            double itemPrice = carpet * (Integer.parseInt(carpetEdt.getText().trim().isEmpty() ? String.valueOf(1) : carpetEdt.getText().trim()));
 
-            total += carpet * Integer.parseInt(carpetEdt.getText());
+            total += carpet * (Integer.parseInt(carpetEdt.getText().trim().isEmpty() ? String.valueOf(1) : carpetEdt.getText().trim()));
 
-            Order item5 = new Order("carpet", Integer.parseInt(carpetEdt.getText()), carpet, itemPrice);
+            Order item5 = new Order("carpet", ((Integer.parseInt(carpetEdt.getText().trim().isEmpty() ? String.valueOf(1) : carpetEdt.getText().trim()))), carpet, itemPrice);
 
             orderItemsList.add(item5);
         }
@@ -360,7 +361,7 @@ public class Transact implements Initializable {
         choiceboxduvet.getItems().addAll(choices);
     }
 
-    private void pageSetup(List<Order> receiptList, Stage owner) {
+    private void pageSetup(List<Order> receiptList, Stage owner)    {
         // Create the PrinterJob
         PrinterJob job = PrinterJob.createPrinterJob();
 
@@ -375,12 +376,12 @@ public class Transact implements Initializable {
         if (proceed)
         {
             //print(job, node);
-            new PrintReceipt(receiptList);
+            String orderid = " ";
+            new PrintReceipt(receiptList, getAmount(), orderid);
         }
     }
 
-    private void print(PrinterJob job, Node node)
-    {
+    private void print(PrinterJob job, Node node) {
         // Set the Job Status Message
         //jobStatus.textProperty().bind(job.jobStatusProperty().asString());
         System.out.println(job.jobStatusProperty().asString());
@@ -399,7 +400,7 @@ public class Transact implements Initializable {
 
         if (!flag) {
 
-            infoBox("Please ensure connection to database is established then Restart Application", null, "Failed");
+            infoBox("Please ensure connection to database is established then Restart Application", "Database Connection", "Failed");
             System.exit(0);
 
         }

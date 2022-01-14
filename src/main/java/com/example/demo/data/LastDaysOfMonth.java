@@ -21,7 +21,6 @@ public class LastDaysOfMonth {
     public String getFirstDay() {
         final DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyyMMdd", Locale.ENGLISH);
         String output = dtf.format(firstDay);
-        //System.out.println("First day converted "+firstDay.toString());
         return firstDay.toString();
     }
 
@@ -32,7 +31,6 @@ public class LastDaysOfMonth {
     public String getLastDay() {
         final DateTimeFormatter dtf = DateTimeFormatter.ofPattern("yyyyMMdd", Locale.ENGLISH);
         String output = dtf.format(lastDay);
-        //System.out.println("Last day converted "+lastDay.toString());
         return lastDay.toString();
     }
 

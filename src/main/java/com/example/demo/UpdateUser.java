@@ -56,11 +56,11 @@ public class UpdateUser implements Initializable {
 
         if (!flag) {
 
-            infoBox("Failed to update user details", null, "Failed");
+            infoBox("Failed to update user details", "Error", "Failed");
 
         } else {
 
-            infoBox("User was updated Successful!", null, "Success");
+            infoBox("User was updated Successful!", "Success", "Success");
             Account.changePasswordStage.close();
         }
 
@@ -124,7 +124,7 @@ public class UpdateUser implements Initializable {
 
         if (!flag) {
 
-            infoBox("Please ensure connection to database is established then Restart Application", null, "Failed");
+            infoBox("Please ensure connection to database is established then Restart Application", "Error", "Failed");
             System.exit(0);
 
         }

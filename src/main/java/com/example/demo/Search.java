@@ -10,10 +10,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Window;
-
 import java.net.URL;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.List;
 import java.util.Objects;
 import java.util.ResourceBundle;
@@ -41,7 +38,7 @@ public class Search implements Initializable {
     }
 
     @FXML
-    public void searchOrder(ActionEvent event) throws SQLException{
+    public void searchOrder(ActionEvent event) {
 
         Window owner = btnsearch.getScene().getWindow();
         if (searchItemEdt.getText() == null || searchItemEdt.getText().trim().isEmpty()) {
@@ -87,7 +84,7 @@ public class Search implements Initializable {
     }
 
     private static void showAlert(Window owner, String message) {
-        Alert alert = new Alert(Alert.AlertType.ERROR);
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Form Error!");
         alert.setHeaderText(null);
         alert.setContentText(message);
@@ -112,14 +109,14 @@ public class Search implements Initializable {
 
         if (!flag) {
 
-            infoBox("Please ensure connection to database is established and Restart Application", null, "Failed");
+            alertBox("Please ensure connection to database is established and Restart Application", "Database Connection", "Failed");
             System.exit(0);
 
         }
     }
 
-    public static void infoBox(String infoMessage, String headerText, String title) {
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+    public static void alertBox(String infoMessage, String headerText, String title) {
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setContentText(infoMessage);
         alert.setTitle(title);
         alert.setHeaderText(headerText);

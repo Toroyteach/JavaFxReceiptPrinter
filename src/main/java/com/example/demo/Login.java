@@ -10,6 +10,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Window;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.ResourceBundle;
@@ -31,12 +32,9 @@ public class Login implements Initializable {
     }
 
     @FXML
-    public void login(ActionEvent event) throws SQLException {
+    public void login(ActionEvent event) throws SQLException, IOException {
 
         Window owner = submitButton.getScene().getWindow();
-
-        System.out.println(emailIdField.getText());
-        System.out.println(passwordField.getText());
 
         if (emailIdField.getText().isEmpty()) {
             showAlert(Alert.AlertType.ERROR, owner, "Form Error!",
@@ -57,11 +55,18 @@ public class Login implements Initializable {
 
         if (!flag) {
 
-            infoBox("Please enter correct Email and Password", null, "Failed");
+            infoBox("Please enter correct Email and Password", "Error Authentication", "Failed");
         } else {
 
-            infoBox("Login Successful!", null, "Failed");
+            //infoBox("Login Successful!", "Authentication", "Success");
+            HelloApplication newMain = new HelloApplication();
+            newMain.changeScene();
         }
+    }
+
+    @FXML
+    public void canelLoginAction(ActionEvent action){
+        System.exit(0);
     }
 
     public static void infoBox(String infoMessage, String headerText, String title) {
@@ -86,9 +91,17 @@ public class Login implements Initializable {
 
         if (!flag) {
 
-            infoBox("Please ensure connection to database is established then Restart Application", null, "Failed");
+            alertBox("Please ensure connection to database is established then Restart Application", "Database Connection", "Failed");
             System.exit(0);
 
         }
+    }
+
+    public static void alertBox(String infoMessage, String headerText, String title) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setContentText(infoMessage);
+        alert.setTitle(title);
+        alert.setHeaderText(headerText);
+        alert.showAndWait();
     }
 }
